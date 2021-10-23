@@ -1,6 +1,21 @@
 {
+  "enabled": true,
+  "timezone": "Europe/London",
+  "semanticCommits": "enabled",
+  "dependencyDashboard": true,
+  "dependencyDashboardTitle": "Renovate Dashboard",
+  "commitBody": "Signed-off-by: Marcos Soutullo Rodriguez <marcos.soutullo91@gmail.com>",
+  "suppressNotifications": ["prIgnoreNotification"],
+  "rebaseWhen": "conflicted",
+  "commitMessageTopic": "{{depName}}",
+  "commitMessageExtra": "to {{newVersion}}",
+  "commitMessageSuffix": "",
   "extends": [
     "config:base"
+  ],
+    // Do not rebase PRs
+  "assignees": [
+    "@kitos9112"
   ],
   "automerge": true
 }
