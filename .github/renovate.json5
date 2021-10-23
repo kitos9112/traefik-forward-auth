@@ -1,5 +1,6 @@
 {
   "enabled": true,
+  "includeForks": true,
   "timezone": "Europe/London",
   "semanticCommits": "enabled",
   "dependencyDashboard": true,
