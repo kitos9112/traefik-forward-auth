@@ -14,7 +14,6 @@
   "extends": [
     "config:base"
   ],
-    // Do not rebase PRs
   "assignees": [
     "@kitos9112"
   ],
