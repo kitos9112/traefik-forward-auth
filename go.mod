@@ -3,7 +3,7 @@ module github.com/kitos9112/traefik-forward-auth
 go 1.17
 
 require (
-	github.com/coreos/go-oidc v2.2.1+incompatible
+	github.com/coreos/go-oidc/v3 v3.1.0
 	github.com/pquerna/cachecontrol v0.0.0-20180517163645-1555304b9b35 // indirect
 	github.com/sirupsen/logrus v1.8.1
 	github.com/stretchr/testify v1.7.0
@@ -12,6 +12,8 @@ require (
 	golang.org/x/oauth2 v0.0.0-20211005180243-6b3c2da341f1
 	gopkg.in/square/go-jose.v2 v2.6.0
 )
+
+require github.com/coreos/go-oidc v2.1.0+incompatible
 
 require (
 	github.com/containous/alice v0.0.0-20181107144136-d83ebdd94cbd // indirect
