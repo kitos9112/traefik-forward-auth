@@ -13,7 +13,7 @@ require (
 	gopkg.in/square/go-jose.v2 v2.6.0
 )
 
-require github.com/coreos/go-oidc v2.2.1+incompatible
+require github.com/coreos/go-oidc/v3 v3.1.0
 
 require (
 	github.com/containous/alice v0.0.0-20181107144136-d83ebdd94cbd // indirect
