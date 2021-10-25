@@ -3,10 +3,11 @@ package tfa
 import (
 	"net/http"
 	"net/url"
+	"regexp"
 
-	"github.com/containous/traefik/v2/pkg/rules"
 	"github.com/kitos9112/traefik-forward-auth/internal/provider"
 	"github.com/sirupsen/logrus"
+	"github.com/traefik/traefik/v2/pkg/rules"
 )
 
 // Server contains router and handler methods
@@ -133,6 +134,15 @@ func (s *Server) AuthCallbackHandler() http.HandlerFunc {
 			}).Warn("Error validating state")
 			http.Error(w, "Not authorized", 401)
 			return
+		}
+
+		// Check valid target redirect
+		target, err := url.Parse(r.Form.Get("target"))
+		matched, _ := regexp.MatchString(`^$`, target.Hostname())
+		if err == nil && matched {
+			logger.Debug("Incoming request from", target, "is legit")
+		} else {
+			logger.Error("Invalid target")
 		}
 
 		// Check for CSRF cookie

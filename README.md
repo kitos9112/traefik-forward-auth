@@ -3,7 +3,7 @@
 
 # Traefik Forward Auth
 
-A minimal forward authentication service that provides OAuth/SSO login and authentication for the [traefik](https://github.com/containous/traefik) reverse proxy/load balancer.
+A minimal forward authentication service that provides OAuth/SSO login and authentication for the [traefik](https://github.com/traefik/traefik) reverse proxy/load balancer.
 
 ## Why?
 
