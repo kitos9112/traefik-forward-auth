@@ -1,9 +1,11 @@
 
-![Build Status](https://img.shields.io/github/workflow/status/thomseddon/traefik-forward-auth/CI) [![Go Report Card](https://goreportcard.com/badge/github.com/thomseddon/traefik-forward-auth)](https://goreportcard.com/report/github.com/thomseddon/traefik-forward-auth) ![Docker Pulls](https://img.shields.io/docker/pulls/thomseddon/traefik-forward-auth.svg) [![GitHub release](https://img.shields.io/github/release/thomseddon/traefik-forward-auth.svg)](https://GitHub.com/thomseddon/traefik-forward-auth/releases/)
+![Build Status](https://img.shields.io/github/workflow/status/kitos9112/traefik-forward-auth/CI) [![Go Report Card](https://goreportcard.com/badge/github.com/kitos9112/traefik-forward-auth)](https://goreportcard.com/report/github.com/kitos9112/traefik-forward-auth) ![Docker Pulls](https://img.shields.io/docker/pulls/kitos9112/traefik-forward-auth.svg) [![GitHub release](https://img.shields.io/github/release/kitos9112/traefik-forward-auth.svg)](https://GitHub.com/kitos9112/traefik-forward-auth/releases/) [![Total alerts](https://img.shields.io/lgtm/alerts/g/kitos9112/traefik-forward-auth.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/kitos9112/traefik-forward-auth/alerts/)
 
 # Traefik Forward Auth
 
-A minimal forward authentication service that provides OAuth/SSO login and authentication for the [traefik](https://github.com/traefik/traefik) reverse proxy/load balancer.
+> Forked from [traefik-forward-auth](https://github.com/thomseddon/traefik-forward-auth) as it stopped being maintained, or at least it looked to me :)
+
+A minimal forward authentication service that provides OAuth/SSO login and authentication for the [traefik](https://github.com/containous/traefik) reverse proxy/load balancer.
 
 ## Why?
 
@@ -17,18 +19,18 @@ A minimal forward authentication service that provides OAuth/SSO login and authe
 
 # Contents
 
-- [Traefik Forward Auth !Build Status [![Go Report Card](https://goreportcard.com/badge/github.com/thomseddon/traefik-forward-auth)](https://goreportcard.com/report/github.com/thomseddon/traefik-forward-auth) ![Docker Pulls](https://img.shields.io/docker/pulls/thomseddon/traefik-forward-auth.svg) [![GitHub release](https://img.shields.io/github/release/thomseddon/traefik-forward-auth.svg)](https://GitHub.com/thomseddon/traefik-forward-auth/releases/)](#traefik-forward-auth----)
+- [Traefik Forward Auth !Build Status [![Go Report Card](https://goreportcard.com/badge/github.com/kitos9112/traefik-forward-auth)](https://goreportcard.com/report/github.com/kitos9112/traefik-forward-auth) ![Docker Pulls](https://img.shields.io/docker/pulls/kitos9112/traefik-forward-auth.svg) [![GitHub release](https://img.shields.io/github/release/kitos9112/traefik-forward-auth.svg)](https://GitHub.com/kitos9112/traefik-forward-auth/releases/)](#traefik-forward-auth----)
   - [Why?](#why)
 - [Contents](#contents)
   - [Releases](#releases)
-      - [Upgrade Guide](#upgrade-guide)
+    - [Upgrade Guide](#upgrade-guide)
   - [Usage](#usage)
-      - [Simple:](#simple)
-      - [Advanced:](#advanced)
-      - [Provider Setup](#provider-setup)
-        - [Google](#google)
-        - [OpenID Connect](#openid-connect)
-        - [Generic OAuth2](#generic-oauth2)
+    - [Simple:](#simple)
+    - [Advanced:](#advanced)
+    - [Provider Setup](#provider-setup)
+      - [Google](#google)
+      - [OpenID Connect](#openid-connect)
+      - [Generic OAuth2](#generic-oauth2)
   - [Configuration](#configuration)
     - [Overview](#overview)
     - [Option Details](#option-details)
@@ -49,21 +51,17 @@ A minimal forward authentication service that provides OAuth/SSO login and authe
 
 ## Releases
 
-We recommend using the `2` tag on docker hub (`thomseddon/traefik-forward-auth:2`).
+We recommend using the `2` tag on docker hub (`kitos9112/traefik-forward-auth:2`).
 
-You can also use the latest incremental releases found on [docker hub](https://hub.docker.com/r/thomseddon/traefik-forward-auth/tags) and [github](https://github.com/thomseddon/traefik-forward-auth/releases).
+You can also use the latest incremental releases found on [docker hub](https://hub.docker.com/r/kitos9112/traefik-forward-auth/tags) and [github](https://github.com/kitos9112/traefik-forward-auth/releases).
 
 ARM releases are also available on docker hub, just append `-arm` or `-arm64` to your desired released (e.g. `2-arm` or `2.1-arm64`).
 
 We also build binary files for usage without docker starting with releases after 2.2.0 You can find these as assets of the specific GitHub release.
 
-#### Upgrade Guide
-
-v2 was released in June 2019, whilst this is fully backwards compatible, a number of configuration options were modified, please see the [upgrade guide](https://github.com/thomseddon/traefik-forward-auth/wiki/v2-Upgrade-Guide) to prevent warnings on startup and ensure you are using the current configuration.
-
 ## Usage
 
-#### Simple:
+### Simple
 
 See below for instructions on how to setup your [Provider Setup](#provider-setup).
 
@@ -82,7 +80,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
   traefik-forward-auth:
-    image: thomseddon/traefik-forward-auth:2
+    image: kitos9112/traefik-forward-auth:2
     environment:
       - PROVIDERS_GOOGLE_CLIENT_ID=your-client-id
       - PROVIDERS_GOOGLE_CLIENT_SECRET=your-client-secret
@@ -100,15 +98,15 @@ services:
       - "traefik.http.routers.whoami.middlewares=traefik-forward-auth"
 ```
 
-#### Advanced:
+### Advanced
 
-Please see the examples directory for a more complete [docker-compose.yml](https://github.com/thomseddon/traefik-forward-auth/blob/master/examples/traefik-v2/swarm/docker-compose.yml) or [kubernetes/simple-separate-pod](https://github.com/thomseddon/traefik-forward-auth/blob/master/examples/traefik-v2/kubernetes/simple-separate-pod/).
+Please see the examples directory for a more complete [docker-compose.yml](https://github.com/kitos9112/traefik-forward-auth/blob/master/examples/traefik-v2/swarm/docker-compose.yml) or [kubernetes/simple-separate-pod](https://github.com/kitos9112/traefik-forward-auth/blob/master/examples/traefik-v2/kubernetes/simple-separate-pod/).
 
-Also in the examples directory is [docker-compose-auth-host.yml](https://github.com/thomseddon/traefik-forward-auth/blob/master/examples/traefik-v2/swarm/docker-compose-auth-host.yml) and [kubernetes/advanced-separate-pod](https://github.com/thomseddon/traefik-forward-auth/blob/master/examples/traefik-v2/kubernetes/advanced-separate-pod/) which shows how to configure a central auth host, along with some other options.
+Also in the examples directory is [docker-compose-auth-host.yml](https://github.com/kitos9112/traefik-forward-auth/blob/master/examples/traefik-v2/swarm/docker-compose-auth-host.yml) and [kubernetes/advanced-separate-pod](https://github.com/kitos9112/traefik-forward-auth/blob/master/examples/traefik-v2/kubernetes/advanced-separate-pod/) which shows how to configure a central auth host, along with some other options.
 
 #### Provider Setup
 
-Below are some general notes on provider setup, specific instructions and examples for a number of providers can be found on the [Provider Setup](https://github.com/thomseddon/traefik-forward-auth/wiki/Provider-Setup) wiki page.
+Below are some general notes on provider setup, specific instructions and examples for a number of providers can be found on the [Provider Setup](https://github.com/kitos9112/traefik-forward-auth/wiki/Provider-Setup) wiki page.
 
 ##### Google
 
@@ -126,7 +124,7 @@ Any provider that supports OpenID Connect 1.0 can be configured via the OIDC con
 
 You must set the `providers.oidc.issuer-url`, `providers.oidc.client-id` and `providers.oidc.client-secret` config options.
 
-Please see the [Provider Setup](https://github.com/thomseddon/traefik-forward-auth/wiki/Provider-Setup) wiki page for examples.
+Please see the [Provider Setup](https://github.com/kitos9112/traefik-forward-auth/wiki/Provider-Setup) wiki page for examples.
 
 ##### Generic OAuth2
 
@@ -143,7 +141,7 @@ You can also set:
 - `providers.generic-oauth.scope`- Any scopes that should be included in the request (default: profile, email)
 - `providers.generic-oauth.token-style` - How token is presented when querying the User URL. Can be `header` or `query`, defaults to `header`. With `header` the token is provided in an Authorization header, with query the token is provided in the `access_token` query string value.
 
-Please see the [Provider Setup](https://github.com/thomseddon/traefik-forward-auth/wiki/Provider-Setup) wiki page for examples.
+Please see the [Provider Setup](https://github.com/kitos9112/traefik-forward-auth/wiki/Provider-Setup) wiki page for examples.
 
 ## Configuration
 
@@ -151,7 +149,7 @@ Please see the [Provider Setup](https://github.com/thomseddon/traefik-forward-au
 
 The following configuration options are supported:
 
-```
+```sh
 Usage:
   traefik-forward-auth [OPTIONS]
 
@@ -218,7 +216,7 @@ All options can be supplied in any of the following ways, in the following prece
 
   The host should be specified without protocol or path, for example:
 
-   ```
+   ```sh
    --auth-host="auth.example.com"
    ```
 
@@ -230,7 +228,7 @@ All options can be supplied in any of the following ways, in the following prece
 
    Used to specify the path to a configuration file, can be set multiple times, each file will be read in the order they are passed. Options should be set in an INI format, for example:
 
-   ```
+   ```sh
    url-path = _oauthpath
    ```
 
@@ -239,7 +237,7 @@ All options can be supplied in any of the following ways, in the following prece
   When set, if a user successfully completes authentication, then if the host of the original request requiring authentication is a subdomain of a given cookie domain, then the authentication cookie will be set for the higher level cookie domain. This means that a cookie can allow access to multiple subdomains without re-authentication. Can be specificed multiple times.
 
    For example:
-   ```
+   ```sh
    --cookie-domain="example.com"  --cookie-domain="test.org"
    ```
 
@@ -327,28 +325,29 @@ All options can be supplied in any of the following ways, in the following prece
 
    Specify selective authentication rules. Rules are specified in the following format: `rule.<name>.<param>=<value>`
 
-   - `<name>` can be any string and is only used to group rules together
-   - `<param>` can be:
-       - `action` - same usage as [`default-action`](#default-action), supported values:
-           - `auth` (default)
-           - `allow`
-       - `domains` - optional, same usage as [`domain`](#domain)
-       - `provider` - same usage as [`default-provider`](#default-provider), supported values:
-           - `google`
-           - `oidc`
-       - `rule` - a rule to match a request, this uses traefik's v2 rule parser for which you can find the documentation here: https://docs.traefik.io/v2.0/routing/routers/#rule, supported values are summarised here:
-           - ``Headers(`key`, `value`)``
-           - ``HeadersRegexp(`key`, `regexp`)``
-           - ``Host(`example.com`, ...)``
-           - ``HostRegexp(`example.com`, `{subdomain:[a-z]+}.example.com`, ...)``
-           - ``Method(methods, ...)``
-           - ``Path(`path`, `/articles/{category}/{id:[0-9]+}`, ...)``
-           - ``PathPrefix(`/products/`, `/articles/{category}/{id:[0-9]+}`)``
-           - ``Query(`foo=bar`, `bar=baz`)``
-       - `whitelist` - optional, same usage as whitelist`](#whitelist)
+  - `<name>` can be any string and is only used to group rules together
+  - `<param>` can be:
+  - `action` - same usage as [`default-action`](#default-action), supported values:
+    - `auth` (default)
+    - `allow`
+  - `domains` - optional, same usage as [`domain`](#domain)
+  - `provider` - same usage as [`default-provider`](#default-provider), supported values:
+    - `google`
+    - `oidc`
+  - `rule` - a rule to match a request, this uses traefik's v2 rule parser for which you can find the documentation here: https://docs.traefik.io/v2.0/routing/routers/#rule, supported values are summarised here:
+         - ``Headers(`key`, `value`)``
+         - ``HeadersRegexp(`key`, `regexp`)``
+         - ``Host(`example.com`, ...)``
+         - ``HostRegexp(`example.com`, `{subdomain:[a-z]+}.example.com`, ...)``
+         - ``Method(methods, ...)``
+         - ``Path(`path`, `/articles/{category}/{id:[0-9]+}`, ...)``
+         - ``PathPrefix(`/products/`, `/articles/{category}/{id:[0-9]+}`)``
+         - ``Query(`foo=bar`, `bar=baz`)``
+  - `whitelist` - optional, same usage as whitelist`](#whitelist)
 
    For example:
-   ```
+
+   ```sh
    # Allow requests that being with `/api/public` and contain the `Content-Type` header with a value of `application/json`
    rule.1.action = allow
    rule.1.rule = PathPrefix(`/api/public`) && Headers(`Content-Type`, `application/json`)
@@ -376,8 +375,8 @@ All options can be supplied in any of the following ways, in the following prece
 
 You can restrict who can login with the following parameters:
 
-* `domain` - Use this to limit logins to a specific domain, e.g. test.com only
-* `whitelist` - Use this to only allow specific users to login e.g. thom@test.com only
+- `domain` - Use this to limit logins to a specific domain, e.g. test.com only
+- `whitelist` - Use this to only allow specific users to login e.g. thom@test.com only
 
 Note, if you pass both `whitelist` and `domain`, then the default behaviour is for only `whitelist` to be used and `domain` will be effectively ignored. You can allow users matching *either* `whitelist` or `domain` by passing the `match-whitelist-or-domain` parameter (this will be the default behaviour in v3). If you set `domains` or `whitelist` on a rule, the global configuration is ignored.
 
@@ -483,7 +482,7 @@ As the hostname in the `redirect_uri` is dynamically generated based on the orig
 
 #### Auth Host Mode
 
-This is an optional mode of operation that is useful when dealing with a large number of subdomains, it is activated by using the `auth-host` config option (see [this example docker-compose.yml](https://github.com/thomseddon/traefik-forward-auth/blob/master/examples/traefik-v2/swarm/docker-compose-auth-host.yml) or [this kubernetes example](https://github.com/thomseddon/traefik-forward-auth/tree/master/examples/traefik-v2/kubernetes/advanced-separate-pod)).
+This is an optional mode of operation that is useful when dealing with a large number of subdomains, it is activated by using the `auth-host` config option (see [this example docker-compose.yml](https://github.com/kitos9112/traefik-forward-auth/blob/master/examples/traefik-v2/swarm/docker-compose-auth-host.yml) or [this kubernetes example](https://github.com/kitos9112/traefik-forward-auth/tree/master/examples/traefik-v2/kubernetes/advanced-separate-pod)).
 
 For example, if you have a few applications: `app1.test.com`, `app2.test.com`, `appN.test.com`, adding every domain to Google's console can become laborious.
 To utilise an auth host, permit domain level cookies by setting the cookie domain to `test.com` then set the `auth-host` to: `auth.test.com`.
@@ -504,7 +503,7 @@ Two criteria must be met for an `auth-host` to be used:
 1. Request matches given `cookie-domain`
 2. `auth-host` is also subdomain of same `cookie-domain`
 
-Please note: For Auth Host mode to work, you must ensure that requests to your auth-host are routed to the traefik-forward-auth container, as demonstrated with the service labels in the [docker-compose-auth.yml](https://github.com/thomseddon/traefik-forward-auth/blob/master/examples/traefik-v2/swarm/docker-compose-auth-host.yml) example and the [ingressroute resource](https://github.com/thomseddon/traefik-forward-auth/blob/master/examples/traefik-v2/kubernetes/advanced-separate-pod/traefik-forward-auth/ingress.yaml) in a kubernetes example.
+Please note: For Auth Host mode to work, you must ensure that requests to your auth-host are routed to the traefik-forward-auth container, as demonstrated with the service labels in the [docker-compose-auth.yml](https://github.com/kitos9112/traefik-forward-auth/blob/master/examples/traefik-v2/swarm/docker-compose-auth-host.yml) example and the [ingressroute resource](https://github.com/kitos9112/traefik-forward-auth/blob/master/examples/traefik-v2/kubernetes/advanced-separate-pod/traefik-forward-auth/ingress.yaml) in a kubernetes example.
 
 ### Logging Out
 
@@ -514,10 +513,10 @@ You can use the `logout-redirect` config option to redirect users to another URL
 
 Note: This only clears the auth cookie from the users browser and as this service is stateless, it does not invalidate the cookie against future use. So if the cookie was recorded, for example, it could continue to be used for the duration of the cookie lifetime.
 
-## Copyright
+## Copyright And License
 
 2018 Thom Seddon
-
-## License
-
 [MIT](https://github.com/thomseddon/traefik-forward-auth/blob/master/LICENSE.md)
+ |
+2021 Marcos Soutullo
+[MIT](https://github.com/kitos9112/traefik-forward-auth/blob/master/LICENSE.md)
