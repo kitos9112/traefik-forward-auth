@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/sirupsen/logrus v1.8.1
-	github.com/stretchr/testify v1.7.0
+	github.com/stretchr/testify v1.7.1
 	github.com/thomseddon/go-flags v1.4.1-0.20190507184247-a3629c504486
 	github.com/traefik/traefik/v2 v2.6.1
 	golang.org/x/oauth2 ee480838109b
