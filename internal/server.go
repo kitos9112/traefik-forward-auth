@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"strings"
 
 	"github.com/kitos9112/traefik-forward-auth/internal/provider"
 	"github.com/sirupsen/logrus"
@@ -109,6 +110,10 @@ func (s *Server) AuthHandler(providerName, rule string) http.HandlerFunc {
 		valid := ValidateEmail(email, rule)
 		if !valid {
 			logger.WithField("email", email).Warn("Invalid email")
+			// The email address isn't valid so display an error and clear the cookie
+			// Clearing the cookie will allow the user to try another email address and avoid being trapped on 'Not authorized'
+			http.SetCookie(w, ClearCookie(r))
+			http.Error(w, "Not authorized (Refresh to try again with a different email address)", 401)
 			http.Error(w, "Not authorized", 401)
 			return
 		}
@@ -232,6 +237,14 @@ func (s *Server) authRedirect(logger *logrus.Entry, w http.ResponseWriter, r *ht
 		logger.WithField("error", err).Error("Error generating nonce")
 		http.Error(w, "Service unavailable", 503)
 		return
+	}
+
+	// clean existing CSRF cookie
+	// Backported from https://github.com/thomseddon/traefik-forward-auth/pull/295
+	for _, v := range r.Cookies() {
+		if strings.Contains(v.Name, config.CSRFCookieName) {
+			http.SetCookie(w, ClearCSRFCookie(r, v))
+		}
 	}
 
 	// Set the CSRF cookie
