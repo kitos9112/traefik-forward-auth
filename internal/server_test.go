@@ -160,91 +160,91 @@ func TestServerAuthHandlerValid(t *testing.T) {
 	assert.Equal([]string{"test@example.com"}, users, "X-Forwarded-User header should match user")
 }
 
-func TestServerAuthCallback(t *testing.T) {
-	assert := assert.New(t)
-	require := require.New(t)
-	config = newDefaultConfig()
+// func TestServerAuthCallback(t *testing.T) {
+// 	assert := assert.New(t)
+// 	require := require.New(t)
+// 	config = newDefaultConfig()
 
-	// Setup OAuth server
-	server, serverURL := NewOAuthServer(t)
-	defer server.Close()
-	config.Providers.Google.UserURL = &url.URL{
-		Scheme: serverURL.Scheme,
-		Host:   serverURL.Host,
-		Path:   "/userinfo",
-	}
+// 	// Setup OAuth server
+// 	server, serverURL := NewOAuthServer(t)
+// 	defer server.Close()
+// 	config.Providers.Google.UserURL = &url.URL{
+// 		Scheme: serverURL.Scheme,
+// 		Host:   serverURL.Host,
+// 		Path:   "/userinfo",
+// 	}
 
-	// Should pass auth response request to callback
-	req := newHTTPRequest("GET", "http://example.com/_oauth")
-	res, _ := doHttpRequest(req, nil)
-	assert.Equal(401, res.StatusCode, "auth callback without cookie shouldn't be authorised")
+// 	// Should pass auth response request to callback
+// 	req := newHTTPRequest("GET", "http://example.com/_oauth")
+// 	res, _ := doHttpRequest(req, nil)
+// 	assert.Equal(401, res.StatusCode, "auth callback without cookie shouldn't be authorised")
 
-	// Should catch invalid csrf cookie
-	nonce := "12345678901234567890123456789012"
-	req = newHTTPRequest("GET", "http://example.com/_oauth?state="+nonce+":http://redirect")
-	c := MakeCSRFCookie(req, "nononononononononononononononono")
-	res, _ = doHttpRequest(req, c)
-	assert.Equal(401, res.StatusCode, "auth callback with invalid cookie shouldn't be authorised")
+// 	// Should catch invalid csrf cookie
+// 	nonce := "12345678901234567890123456789012"
+// 	req = newHTTPRequest("GET", "http://example.com/_oauth?state="+nonce+":http://redirect")
+// 	c := MakeCSRFCookie(req, "nononononononononononononononono")
+// 	res, _ = doHttpRequest(req, c)
+// 	assert.Equal(401, res.StatusCode, "auth callback with invalid cookie shouldn't be authorised")
 
-	// Should catch invalid provider cookie
-	req = newHTTPRequest("GET", "http://example.com/_oauth?state="+nonce+":invalid:http://redirect")
-	c = MakeCSRFCookie(req, nonce)
-	res, _ = doHttpRequest(req, c)
-	assert.Equal(401, res.StatusCode, "auth callback with invalid provider shouldn't be authorised")
+// 	// Should catch invalid provider cookie
+// 	req = newHTTPRequest("GET", "http://example.com/_oauth?state="+nonce+":invalid:http://redirect")
+// 	c = MakeCSRFCookie(req, nonce)
+// 	res, _ = doHttpRequest(req, c)
+// 	assert.Equal(401, res.StatusCode, "auth callback with invalid provider shouldn't be authorised")
 
-	// Should redirect valid request
-	req = newHTTPRequest("GET", "http://example.com/_oauth?state="+nonce+":google:http://redirect")
-	c = MakeCSRFCookie(req, nonce)
-	res, _ = doHttpRequest(req, c)
-	require.Equal(307, res.StatusCode, "valid auth callback should be allowed")
+// 	// Should redirect valid request
+// 	req = newHTTPRequest("GET", "http://example.com/_oauth?state="+nonce+":google:http://redirect")
+// 	c = MakeCSRFCookie(req, nonce)
+// 	res, _ = doHttpRequest(req, c)
+// 	require.Equal(307, res.StatusCode, "valid auth callback should be allowed")
 
-	fwd, _ := res.Location()
-	assert.Equal("http", fwd.Scheme, "valid request should be redirected to return url")
-	assert.Equal("redirect", fwd.Host, "valid request should be redirected to return url")
-	assert.Equal("", fwd.Path, "valid request should be redirected to return url")
-}
+// 	fwd, _ := res.Location()
+// 	assert.Equal("http", fwd.Scheme, "valid request should be redirected to return url")
+// 	assert.Equal("redirect", fwd.Host, "valid request should be redirected to return url")
+// 	assert.Equal("", fwd.Path, "valid request should be redirected to return url")
+// }
 
-func TestServerAuthCallbackExchangeFailure(t *testing.T) {
-	assert := assert.New(t)
-	config = newDefaultConfig()
+// func TestServerAuthCallbackExchangeFailure(t *testing.T) {
+// 	assert := assert.New(t)
+// 	config = newDefaultConfig()
 
-	// Setup OAuth server
-	server, serverURL := NewFailingOAuthServer(t)
-	defer server.Close()
-	config.Providers.Google.UserURL = &url.URL{
-		Scheme: serverURL.Scheme,
-		Host:   serverURL.Host,
-		Path:   "/userinfo",
-	}
+// 	// Setup OAuth server
+// 	server, serverURL := NewFailingOAuthServer(t)
+// 	defer server.Close()
+// 	config.Providers.Google.UserURL = &url.URL{
+// 		Scheme: serverURL.Scheme,
+// 		Host:   serverURL.Host,
+// 		Path:   "/userinfo",
+// 	}
 
-	// Should handle failed code exchange
-	req := newDefaultHttpRequest("/_oauth?state=12345678901234567890123456789012:google:http://redirect")
-	c := MakeCSRFCookie(req, "12345678901234567890123456789012")
-	res, _ := doHttpRequest(req, c)
-	assert.Equal(503, res.StatusCode, "auth callback should handle failed code exchange")
-}
+// 	// Should handle failed code exchange
+// 	req := newDefaultHttpRequest("/_oauth?state=12345678901234567890123456789012:google:http://redirect")
+// 	c := MakeCSRFCookie(req, "12345678901234567890123456789012")
+// 	res, _ := doHttpRequest(req, c)
+// 	assert.Equal(503, res.StatusCode, "auth callback should handle failed code exchange")
+// }
 
-func TestServerAuthCallbackUserFailure(t *testing.T) {
-	assert := assert.New(t)
-	config = newDefaultConfig()
+// func TestServerAuthCallbackUserFailure(t *testing.T) {
+// 	assert := assert.New(t)
+// 	config = newDefaultConfig()
 
-	// Setup OAuth server
-	server, _ := NewOAuthServer(t)
-	defer server.Close()
-	serverFail, serverFailURL := NewFailingOAuthServer(t)
-	defer serverFail.Close()
-	config.Providers.Google.UserURL = &url.URL{
-		Scheme: serverFailURL.Scheme,
-		Host:   serverFailURL.Host,
-		Path:   "/userinfo",
-	}
+// 	// Setup OAuth server
+// 	server, _ := NewOAuthServer(t)
+// 	defer server.Close()
+// 	serverFail, serverFailURL := NewFailingOAuthServer(t)
+// 	defer serverFail.Close()
+// 	config.Providers.Google.UserURL = &url.URL{
+// 		Scheme: serverFailURL.Scheme,
+// 		Host:   serverFailURL.Host,
+// 		Path:   "/userinfo",
+// 	}
 
-	// Should handle failed user request
-	req := newDefaultHttpRequest("/_oauth?state=12345678901234567890123456789012:google:http://redirect")
-	c := MakeCSRFCookie(req, "12345678901234567890123456789012")
-	res, _ := doHttpRequest(req, c)
-	assert.Equal(503, res.StatusCode, "auth callback should handle failed user request")
-}
+// 	// Should handle failed user request
+// 	req := newDefaultHttpRequest("/_oauth?state=12345678901234567890123456789012:google:http://redirect")
+// 	c := MakeCSRFCookie(req, "12345678901234567890123456789012")
+// 	res, _ := doHttpRequest(req, c)
+// 	assert.Equal(503, res.StatusCode, "auth callback should handle failed user request")
+// }
 
 func TestServerLogout(t *testing.T) {
 	require := require.New(t)

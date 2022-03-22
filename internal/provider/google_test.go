@@ -43,12 +43,6 @@ func TestGoogleSetup(t *testing.T) {
 	assert.Equal(&url.URL{
 		Scheme: "https",
 		Host:   "www.googleapis.com",
-		Path:   "/oauth2/v3/token",
-	}, p.TokenURL)
-
-	assert.Equal(&url.URL{
-		Scheme: "https",
-		Host:   "www.googleapis.com",
 		Path:   "/oauth2/v2/userinfo",
 	}, p.UserURL)
 }
@@ -85,40 +79,6 @@ func TestGoogleGetLoginURL(t *testing.T) {
 		"state":         []string{"state"},
 	}
 	assert.Equal(expectedQs, qs)
-}
-
-func TestGoogleExchangeCode(t *testing.T) {
-	assert := assert.New(t)
-
-	// Setup server
-	expected := url.Values{
-		"client_id":     []string{"idtest"},
-		"client_secret": []string{"sectest"},
-		"code":          []string{"code"},
-		"grant_type":    []string{"authorization_code"},
-		"redirect_uri":  []string{"http://example.com/_oauth"},
-	}
-	server, serverURL := NewOAuthServer(t, map[string]string{
-		"token": expected.Encode(),
-	})
-	defer server.Close()
-
-	// Setup provider
-	p := Google{
-		ClientID:     "idtest",
-		ClientSecret: "sectest",
-		Scope:        "scopetest",
-		Prompt:       "consent select_account",
-		TokenURL: &url.URL{
-			Scheme: serverURL.Scheme,
-			Host:   serverURL.Host,
-			Path:   "/token",
-		},
-	}
-
-	token, err := p.ExchangeCode("http://example.com/_oauth", "code")
-	assert.Nil(err)
-	assert.Equal("123456789", token)
 }
 
 func TestGoogleGetUser(t *testing.T) {
