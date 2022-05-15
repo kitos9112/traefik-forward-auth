@@ -147,7 +147,7 @@ func (s *Server) AuthCallbackHandler() http.HandlerFunc {
 		target, err := url.Parse(r.Form.Get("target"))
 		matched, _ := regexp.MatchString(`^$`, target.Hostname())
 		if err == nil && matched {
-			logger.Debug("Incoming request from", strings.Replace(target.String(), "\n", "", -1), "is legit")
+			logger.Debug("Incoming request from ", strings.Replace(target.String(), "\n", "", -1), "is legit")
 		} else {
 			logger.Error("Invalid target")
 		}
@@ -205,13 +205,18 @@ func (s *Server) AuthCallbackHandler() http.HandlerFunc {
 		// Generate cookie
 		http.SetCookie(w, MakeCookie(r, user.Email))
 		logger.WithFields(logrus.Fields{
-			"provider": providerName,
-			"redirect": redirect,
-			"user":     user.Email,
+			"provider": strings.Replace(providerName, "\n", "", -1),
+			"redirect": strings.Replace(redirect, "\n", "", -1),
+			"user":     strings.Replace(user.Email, "\n", "", -1),
 		}).Info("Successfully generated auth cookie, redirecting user.")
 
-		// Redirect
-		http.Redirect(w, r, redirect, http.StatusTemporaryRedirect)
+		// Redirect - Ensure the redirect is legit and the regex matches the host name
+		matched, _ = regexp.MatchString(`^$`, redirect)
+		if err == nil && matched {
+			http.Redirect(w, r, redirect, http.StatusTemporaryRedirect)
+		} else {
+			http.Error(w, "Unauthorized Redirection", 401)
+		}
 	}
 }
 
