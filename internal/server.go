@@ -109,7 +109,9 @@ func (s *Server) AuthHandler(providerName, rule string) http.HandlerFunc {
 		// Validate user
 		valid := ValidateEmail(email, rule)
 		if !valid {
-			logger.WithField("email", email).Warn("Invalid email")
+			escapedEmail := strings.Replace(email, "\n", "", -1)
+			escapedEmail = strings.Replace(escapedEmail, "\r", "", -1)
+			logger.WithField("email", escapedEmail).Warn("Invalid email")
 			// The email address isn't valid so display an error and clear the cookie
 			// Clearing the cookie will allow the user to try another email address and avoid being trapped on 'Not authorized'
 			http.SetCookie(w, ClearCookie(r))
@@ -145,7 +147,7 @@ func (s *Server) AuthCallbackHandler() http.HandlerFunc {
 		target, err := url.Parse(r.Form.Get("target"))
 		matched, _ := regexp.MatchString(`^$`, target.Hostname())
 		if err == nil && matched {
-			logger.Debug("Incoming request from", target, "is legit")
+			logger.Debug("Incoming request from", strings.Replace(target.String(), "\n", "", -1), "is legit")
 		} else {
 			logger.Error("Invalid target")
 		}
@@ -263,20 +265,20 @@ func (s *Server) authRedirect(logger *logrus.Entry, w http.ResponseWriter, r *ht
 
 	logger.WithFields(logrus.Fields{
 		"csrf_cookie": csrf,
-		"login_url":   loginURL,
+		"login_url":   strings.Replace(loginURL, "\n", "", -1),
 	}).Debug("Set CSRF cookie and redirected to provider login url")
 }
 
 func (s *Server) logger(r *http.Request, handler, rule, msg string) *logrus.Entry {
 	// Create logger
 	logger := log.WithFields(logrus.Fields{
-		"handler":   handler,
-		"rule":      rule,
-		"method":    r.Header.Get("X-Forwarded-Method"),
-		"proto":     r.Header.Get("X-Forwarded-Proto"),
-		"host":      r.Header.Get("X-Forwarded-Host"),
-		"uri":       r.Header.Get("X-Forwarded-Uri"),
-		"source_ip": r.Header.Get("X-Forwarded-For"),
+		"handler":   strings.Replace(handler, "\n", "", -1),
+		"rule":      strings.Replace(rule, "\n", "", -1),
+		"method":    strings.Replace(r.Header.Get("X-Forwarded-Method"), "\n", "", -1),
+		"proto":     strings.Replace(r.Header.Get("X-Forwarded-Proto"), "\n", "", -1),
+		"host":      strings.Replace(r.Header.Get("X-Forwarded-Host"), "\n", "", -1),
+		"uri":       strings.Replace(r.Header.Get("X-Forwarded-Uri"), "\n", "", -1),
+		"source_ip": strings.Replace(r.Header.Get("X-Forwarded-For"), "\n", "", -1),
 	})
 
 	// Log request
