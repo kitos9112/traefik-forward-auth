@@ -147,7 +147,7 @@ func (s *Server) AuthCallbackHandler() http.HandlerFunc {
 		target, err := url.Parse(r.Form.Get("target"))
 		matched, _ := regexp.MatchString(`^$`, target.Hostname())
 		if err == nil && matched {
-			logger.Debug("Incoming request from", target, "is legit")
+			logger.Debug("Incoming request from", strings.Replace(target.String(), "\n", "", -1), "is legit")
 		} else {
 			logger.Error("Invalid target")
 		}
@@ -265,7 +265,7 @@ func (s *Server) authRedirect(logger *logrus.Entry, w http.ResponseWriter, r *ht
 
 	logger.WithFields(logrus.Fields{
 		"csrf_cookie": csrf,
-		"login_url":   loginURL,
+		"login_url":   strings.Replace(loginURL, "\n", "", -1),
 	}).Debug("Set CSRF cookie and redirected to provider login url")
 }
 
