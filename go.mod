@@ -11,7 +11,7 @@ require (
 	gopkg.in/square/go-jose.v2 v2.6.0
 )
 
-require github.com/coreos/go-oidc/v3 v3.3.0
+require github.com/coreos/go-oidc/v3 v3.4.0
 
 require (
 	cloud.google.com/go v0.102.0 // indirect
