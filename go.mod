@@ -42,7 +42,7 @@ require (
 
 // From traefik
 replace (
-	github.com/Azure/go-autorest => github.com/Azure/go-autorest v12.4.1+incompatible
+	github.com/Azure/go-autorest/v14 => github.com/Azure/go-autorest v14.2.0+incompatible
 	github.com/abbot/go-http-auth => github.com/containous/go-http-auth v0.4.1-0.20180112153951-65b0cdae8d7f
 	github.com/docker/docker => github.com/docker/engine v1.13.1
 	github.com/go-check/check => github.com/containous/check v0.0.0-20170915194414-ca0bf163426a
