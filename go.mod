@@ -7,7 +7,7 @@ require (
 	github.com/stretchr/testify v1.8.0
 	github.com/thomseddon/go-flags v1.4.1-0.20190507184247-a3629c504486
 	github.com/traefik/traefik/v2 v2.6.6
-	golang.org/x/oauth2 v0.0.0-20220909003341-f21342109be1
+	golang.org/x/oauth2 v0.0.0-20221006150949-b44042a4b9c1
 	gopkg.in/square/go-jose.v2 v2.6.0
 )
 
