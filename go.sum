@@ -390,6 +390,7 @@ github.com/containous/alice v0.0.0-20181107144136-d83ebdd94cbd h1:0n+lFLh5zU0l6K
 github.com/containous/alice v0.0.0-20181107144136-d83ebdd94cbd/go.mod h1:BbQgeDS5i0tNvypwEoF1oNjOJw8knRAE1DnVvjDstcQ=
 github.com/containous/check v0.0.0-20170915194414-ca0bf163426a/go.mod h1:eQOqZ7GoFsLxI7jFKLs7+Nv2Rm1x4FyK8d2NV+yGjwQ=
 github.com/containous/go-http-auth v0.4.1-0.20180112153951-65b0cdae8d7f/go.mod h1:dCmRGidPSLagL8D/2u7yIO6Y/8D/yuYX9EdKrnrhpCA=
+github.com/containous/go-http-auth v0.4.1-0.20181019201920-860ed7f246ff/go.mod h1:dCmRGidPSLagL8D/2u7yIO6Y/8D/yuYX9EdKrnrhpCA=
 github.com/containous/go-rancher-metadata v0.0.0-20170929155856-d2103caca587/go.mod h1:YTAhdMF+tmHPGF7v0uZJ22+XNY/jz1ZYdBCeTZnsrYU=
 github.com/containous/go-rancher-metadata v0.0.0-20190402144056-c6a65f8b7a28/go.mod h1:YTAhdMF+tmHPGF7v0uZJ22+XNY/jz1ZYdBCeTZnsrYU=
 github.com/containous/minheap v0.0.0-20190809180810-6e71eb837595/go.mod h1:+lHFbEasIiQVGzhVDVw/cn0ZaOzde2OwNncp1NhXV4c=
