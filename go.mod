@@ -11,14 +11,14 @@ require (
 	gopkg.in/square/go-jose.v2 v2.6.0
 )
 
-require github.com/coreos/go-oidc/v3 v3.8.0
+require github.com/coreos/go-oidc/v3 v3.9.0
 
 require (
 	cloud.google.com/go/compute v1.20.1 // indirect
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect
 	github.com/containous/alice v0.0.0-20181107144136-d83ebdd94cbd // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/go-jose/go-jose/v3 v3.0.0 // indirect
+	github.com/go-jose/go-jose/v3 v3.0.1 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/gravitational/trace v1.1.18 // indirect
