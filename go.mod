@@ -2,7 +2,7 @@ module github.com/kitos9112/traefik-forward-auth
 
 go 1.23.0
 
-toolchain go1.23.3
+toolchain go1.23.4
 
 require (
 	github.com/sirupsen/logrus v1.9.3
