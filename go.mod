@@ -1,19 +1,17 @@
 module github.com/kitos9112/traefik-forward-auth
 
-go 1.23.0
-
-toolchain go1.23.3
+go 1.25.0
 
 require (
 	github.com/sirupsen/logrus v1.9.3
 	github.com/stretchr/testify v1.10.0
 	github.com/thomseddon/go-flags v1.4.1-0.20190507184247-a3629c504486
 	github.com/traefik/traefik/v2 v2.11.9
-	golang.org/x/oauth2 v0.24.0
+	golang.org/x/oauth2 v0.36.0
 	gopkg.in/square/go-jose.v2 v2.6.0
 )
 
-require github.com/coreos/go-oidc/v3 v3.11.0
+require github.com/coreos/go-oidc/v3 v3.18.0
 
 require (
 	cloud.google.com/go/compute v1.20.1 // indirect
@@ -21,7 +19,7 @@ require (
 	github.com/containous/alice v0.0.0-20181107144136-d83ebdd94cbd // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/go-jose/go-jose/v3 v3.0.1 // indirect
-	github.com/go-jose/go-jose/v4 v4.0.2 // indirect
+	github.com/go-jose/go-jose/v4 v4.1.4 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/gravitational/trace v1.1.18 // indirect
